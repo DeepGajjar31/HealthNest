@@ -216,7 +216,7 @@ const DoctorsDashboard = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <Paper className="grid-item">
-              <Typography variant="h6" gutterBottom>Today's Appointments</Typography>
+              <Typography variant="h6" gutterBottom>Today&apos;s Appointments</Typography>
               <Typography variant="body1">{todayAppointments}</Typography>
             </Paper>
           </Grid>
