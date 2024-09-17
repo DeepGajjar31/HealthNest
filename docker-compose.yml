@@ -1,0 +1,75 @@
+services:
+  frontend:
+    # image: enblitztechnologies/healthnest:frontend
+    build:
+      context: frontend
+    container_name: healthnest-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - healthnest-network
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8081
+      - WEBSOCKET_URL=ws://localhost:8081/ws
+  backend:
+    # image: enblitztechnologies/healthnest:backend
+    # image: enblitztechnologies/healthnest:backend
+    build:
+      context: backend
+    container_name: healthnest-backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_HOST: localhost
+      DB_USER: healthnest
+      DB_PASSWORD: hel#net191
+      DB_DATABASE: healthnest-db
+      DB_PORT: 3306
+      API_PORT: 3000
+    networks:
+      - healthnest-network
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:3000/ || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    command: [ "sh", "-c", "sleep 20 && npm start" ]
+  mysql:
+    image: enblitztechnologies/healthnest:mysql
+    container_name: healthnest-mysql
+    ports:
+      - "3306:3306" # Change this line to avoid port conflict
+    environment:
+      MYSQL_DATABASE: healthnest-db
+      MYSQL_USER: healthnest
+      MYSQL_PASSWORD: hel#net191
+      MYSQL_ROOT_PASSWORD: root123
+      DB_PORT: 3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -p$MYSQL_PASSWORD"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks:
+      - healthnest-network
+
+volumes:
+  mysql-data:
+
+
+networks:
+  healthnest-network:
+    driver: bridge

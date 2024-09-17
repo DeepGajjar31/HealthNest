@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hn-backend
+  namespace: hn-dev
+  labels:
+    app: hn-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hn-backend
+  template:
+    metadata:
+      labels:
+        app: hn-backend
+    spec:
+      containers:
+        - image: enblitztechnologies/healthnest:backend
+          name: hn-backend
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: Asia/Singapore
+          envFrom:
+            - configMapRef:
+                name: hn-backend-config
+            - secretRef:
+                name: hn-mysql-secret
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "128Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1024Mi"
+          # livenessProbe:
+          #   httpGet:
+          #     path: /backend/actuator/health
+          #     port: 8079
+          #   initialDelaySeconds: 120
+          #   periodSeconds: 20
+          #   timeoutSeconds: 5
+          #   failureThreshold: 3
+          #   successThreshold: 1
+          # readinessProbe:
+          #   httpGet:
+          #     path: /backend/actuator/health
+          #     port: 8079
+          #   initialDelaySeconds: 120
+          #   periodSeconds: 20
+          #   timeoutSeconds: 5
+          #   failureThreshold: 3
+          #   successThreshold: 1
+          ports:
+            - containerPort: 8081
+      # imagePullSecrets:
+      #   - name: regcred

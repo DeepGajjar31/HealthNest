@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+  labels:
+    kubernetes.io/metadata.name: hn-dev
+  name: hn-dev
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active

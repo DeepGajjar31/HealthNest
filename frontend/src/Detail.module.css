@@ -1,0 +1,15 @@
+.card {
+  width:100%;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%; /* Increase the card width */
+  max-width: 700px; /* Set a max-width if needed */
+  margin: 0 auto; /* Center the card */
+}
+
+.fonts {
+  font-size: 11px;
+}

@@ -1,0 +1,41 @@
+.col-4 {
+  width: 33.33%;
+  float: left;
+  padding: 15px;
+}
+
+.col-6 {
+  width: 50%;
+  float: left;
+  padding: 15px;
+}
+
+.details-doc-img img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%; /* Making the image circular */
+  border: 2px solid #ccc;
+}
+
+.details-doc-info {
+  margin-top: 20px;
+}
+
+.details-doc-info p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+/* Clearfix to clear the float */
+::after {
+  content: "";
+  display: table;
+  clear: both;
+}
